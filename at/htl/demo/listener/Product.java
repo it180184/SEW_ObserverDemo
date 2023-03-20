@@ -1,17 +1,18 @@
-package at.htl.demo.diy;
+package at.htl.demo.listener;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+import java.util.Observable;
 
 public class Product {
     private String name;
     private boolean available;
-    private Set<PotentialBuyer> potentialBuyers;
+    private PropertyChangeSupport support;
 
     public Product(String name, boolean available) {
         this.name = name;
         this.available = available;
-        this.potentialBuyers = new HashSet<>();
+        support = new PropertyChangeSupport(this);
     }
 
     public String getName() {
@@ -23,17 +24,17 @@ public class Product {
     }
 
     public void update(boolean available) {
+        support.firePropertyChange("available", this.available, available);
         this.available = available;
         System.out.printf("Updated Product %s%n", this);
-        this.notifyPotentialBuyers();
     }
 
-    public void subscribe (PotentialBuyer potentialBuyer) {
-        this.potentialBuyers.add(potentialBuyer);
+    public void addPropertyChangeListener(PropertyChangeListener pcl) {
+        support.addPropertyChangeListener(pcl);
     }
 
-    private void notifyPotentialBuyers() {
-        this.potentialBuyers.forEach(potentialBuyer -> potentialBuyer.notify(this));
+    public void removePropertyChangeListener(PropertyChangeListener pcl) {
+        support.removePropertyChangeListener(pcl);
     }
 
     @Override

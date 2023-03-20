@@ -1,4 +1,4 @@
-package at.htl.demo.diy;
+package at.htl.demo.observer;
 
 import java.util.ArrayList;
 import java.util.List;
