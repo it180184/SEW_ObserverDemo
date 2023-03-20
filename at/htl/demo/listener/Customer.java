@@ -14,6 +14,6 @@ public class Customer implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        System.out.printf("Customer (%s) received Product update for %b %n", name, evt.getNewValue());
+        System.out.printf("Customer (%s) received Product update to %b %n", name, evt.getNewValue());
     }
 }
